@@ -1,0 +1,260 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+
+  --color-cream: #f7f2e9;
+  --color-ivory: #fcf9f3;
+  --color-sand: #efe5d4;
+  --color-champagne: #dcc9a6;
+  --color-gold: #9c7941;
+  --color-gold-light: #c6a46a;
+  --color-ink: #262019;
+  --color-espresso: #211b15;
+  --color-muted: #786e61;
+  --color-line: #ded3c1;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+
+  ::selection {
+    background: var(--color-champagne);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+}
+
+/* ---------- Typography helpers ---------- */
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  line-height: 1.4;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .label {
+    font-size: 0.6875rem;
+  }
+}
+
+.serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* ---------- Buttons & links ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 9999px;
+  padding: 0.95rem 1.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.btn:active {
+  transform: scale(0.985);
+}
+
+.btn-dark {
+  background-color: var(--color-ink);
+  color: var(--color-ivory);
+  border: 1px solid var(--color-ink);
+}
+
+.btn-dark:hover {
+  background-color: #3a3027;
+  border-color: #3a3027;
+}
+
+.btn-outline {
+  border: 1px solid color-mix(in srgb, var(--color-ink) 30%, transparent);
+  color: var(--color-ink);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-ink);
+  color: var(--color-ivory);
+  border-color: var(--color-ink);
+}
+
+.btn-gold {
+  background-color: var(--color-champagne);
+  color: var(--color-ink);
+  border: 1px solid var(--color-champagne);
+}
+
+.btn-gold:hover {
+  background-color: #e6d5b6;
+  border-color: #e6d5b6;
+}
+
+.link-line {
+  position: relative;
+  display: inline-block;
+}
+
+.link-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.link-line:hover::after,
+.link-line:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Texture ---------- */
+.paper-texture {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--color-ink) 7%, transparent) 0.5px,
+    transparent 0.5px
+  );
+  background-size: 4px 4px;
+}
+
+.hero-wash {
+  background:
+    radial-gradient(70% 55% at 50% 8%, #fdfaf4 0%, transparent 60%),
+    radial-gradient(50% 40% at 88% 80%, #f0e4d0 0%, transparent 70%),
+    radial-gradient(45% 40% at 8% 85%, #f1e7d8 0%, transparent 70%),
+    var(--color-cream);
+}
+
+/* ---------- Marquee ---------- */
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-x 42s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Misc ---------- */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.drawer-shadow {
+  box-shadow: -24px 0 80px -32px rgba(38, 32, 25, 0.35);
+}
+
+.image-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image: radial-gradient(rgba(38, 32, 25, 0.35) 0.4px, transparent 0.4px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+}
+
+@keyframes soft-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+.soft-bounce {
+  animation: soft-bounce 2.4s ease-in-out infinite;
+}
+
+/* Accordion */
+.faq-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s ease;
+}
+
+.faq-body[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.faq-body > div {
+  overflow: hidden;
+}
