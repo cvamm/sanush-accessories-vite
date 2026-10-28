@@ -1,37 +1,38 @@
 import { ArrowUpRight } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { asset } from "@/utils/asset";
+import { products } from "@/data/site";
 
 const CATEGORY_CARDS = [
   {
-    name: "Necklaces",
-    note: "Coins, pearls & fine layers",
-    image: "/images/pendant-neck.jpg",
-    alt: "Layered gold necklaces worn on warm skin",
+    name: "Jhumkas",
+    note: "Stone-set, pearl-dropped",
+    image: "/images/products/jhumka-pink-pearl.jpg",
+    alt: "Gold jhumka earrings with pink stones and pearl drops",
     className: "col-span-2 md:col-span-1 md:row-span-2",
     aspect: "aspect-[4/5] md:aspect-auto md:h-full",
   },
   {
     name: "Earrings",
-    note: "Huggies & the curated ear",
-    image: "/images/hoops.jpg",
-    alt: "Gold huggie hoops on travertine",
+    note: "Lightweight everyday gold",
+    image: "/images/products/jhumka-green-pearl.jpg",
+    alt: "Gold jhumka earrings with green stones and pearl drops",
     className: "col-span-1",
     aspect: "aspect-square",
   },
   {
-    name: "Rings",
-    note: "Thin stacks, little pearls",
-    image: "/images/rings.jpg",
-    alt: "Gold stacking rings on ivory marble",
+    name: "Bangles",
+    note: "Enamel petals, slim stack",
+    image: "/images/products/bangle-white-enamel.jpg",
+    alt: "Slim gold bangle inlaid with white enamel petals",
     className: "col-span-1",
     aspect: "aspect-square",
   },
   {
     name: "Bracelets",
-    note: "Everyday wrist layers",
-    image: "/images/bracelet.jpg",
-    alt: "Delicate gold bracelets on a wrist",
+    note: "Clovers & baby sizing",
+    image: "/images/products/bracelet-blue-clover.jpg",
+    alt: "Fine gold chain bracelet with blue enamel clover motifs",
     className: "col-span-2",
     aspect: "aspect-[2/1]",
   },
@@ -53,7 +54,7 @@ export default function CategoryRail() {
               href="#shop"
               className="group hidden items-center gap-1.5 text-[9px] uppercase tracking-[0.18em] text-ink/55 transition-colors hover:text-gold sm:flex"
             >
-              All eight pieces
+              All {products.length} pieces
               <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} />
             </a>
           </div>

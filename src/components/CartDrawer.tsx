@@ -1,15 +1,16 @@
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, Minus, Plus, ShoppingBag, X } from "lucide-react";
+import { ArrowRight, Lock, Minus, Plus, ShoppingBag, X } from "lucide-react";
 import { useEffect } from "react";
-import { InstagramIcon } from "@/components/BrandIcons";
 import { asset } from "@/utils/asset";
 import {
   formatINR,
-  INSTAGRAM_URL,
-  type Product,
+  FREE_SHIPPING_AT,
+  PAYMENT_NOTE,
+  SHIPPING_FEE,
+  type PricedProduct,
 } from "@/data/site";
 
-export type CartLine = { product: Product; qty: number };
+export type CartLine = { product: PricedProduct; qty: number };
 
 type CartDrawerProps = {
   open: boolean;
@@ -17,9 +18,8 @@ type CartDrawerProps = {
   onClose: () => void;
   onUpdateQty: (id: string, delta: number) => void;
   onRemove: (id: string) => void;
+  onCheckout: () => void;
 };
-
-const FREE_SHIPPING_AT = 1499;
 
 export default function CartDrawer({
   open,
@@ -27,10 +27,12 @@ export default function CartDrawer({
   onClose,
   onUpdateQty,
   onRemove,
+  onCheckout,
 }: CartDrawerProps) {
   const subtotal = items.reduce((sum, line) => sum + line.product.price * line.qty, 0);
   const remaining = Math.max(0, FREE_SHIPPING_AT - subtotal);
   const progress = Math.min(100, (subtotal / FREE_SHIPPING_AT) * 100);
+  const shipping = subtotal === 0 || subtotal >= FREE_SHIPPING_AT ? 0 : SHIPPING_FEE;
 
   useEffect(() => {
     if (!open) return;
@@ -95,8 +97,8 @@ export default function CartDrawer({
                 </span>
                 <h3 className="font-serif text-2xl text-ink">Your bag is still dreaming.</h3>
                 <p className="mt-2 max-w-[30ch] text-xs font-light leading-relaxed text-muted">
-                  A little gold goes a long way. Start with our most-loved huggies
-                  or a coin necklace you&apos;ll forget you&apos;re wearing.
+                  A little gold goes a long way. Start with the jhumkas everyone
+                  asks about, or a bracelet you&apos;ll forget you&apos;re wearing.
                 </p>
                 <a href="#shop" onClick={onClose} className="btn btn-dark mt-6">
                   Shop the edit
@@ -190,8 +192,8 @@ export default function CartDrawer({
                   <div className="mb-6 flex items-start gap-2.5 rounded-sm bg-sand/50 p-3">
                     <span className="mt-0.5 text-gold">✦</span>
                     <p className="text-[10px] font-light leading-relaxed text-ink/70">
-                      Every order arrives in our signature gift-ready pouch. Add a
-                      handwritten note in your DM — it&apos;s on us.
+                      Every order arrives in our signature gift-ready pouch. Leave a
+                      note at checkout and we&apos;ll pack it in.
                     </p>
                   </div>
                 </div>
@@ -201,21 +203,26 @@ export default function CartDrawer({
                     <span className="label text-[9px] text-ink/60">Subtotal</span>
                     <span className="font-serif text-2xl text-ink">{formatINR(subtotal)}</span>
                   </div>
-                  <p className="mt-1 text-[10px] font-light text-muted">
-                    Shipping confirmed in your DM. No hidden little surprises.
-                  </p>
-                  <a
-                    href={INSTAGRAM_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <div className="mt-1.5 flex items-baseline justify-between">
+                    <span className="text-[10px] font-light text-muted">Shipping</span>
+                    <span className="text-[11px] font-light tabular-nums text-ink/75">
+                      {shipping === 0 ? "Free" : formatINR(shipping)}
+                    </span>
+                  </div>
+                  <div className="mt-2 flex items-baseline justify-between border-t border-line/70 pt-2">
+                    <span className="label text-[9px] text-ink/60">Total</span>
+                    <span className="font-serif text-xl text-ink">{formatINR(subtotal + shipping)}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={onCheckout}
                     className="btn btn-dark mt-4 w-full"
                   >
-                    <InstagramIcon className="h-4 w-4" />
-                    Checkout on Instagram
-                  </a>
+                    <Lock className="h-3.5 w-3.5" strokeWidth={1.6} />
+                    Pay securely with Razorpay
+                  </button>
                   <p className="mt-2.5 text-center text-[9px] font-light leading-relaxed text-muted">
-                    We&apos;ll confirm availability, delivery & payment with you
-                    personally in the DMs.
+                    {PAYMENT_NOTE}
                   </p>
                   <button
                     type="button"

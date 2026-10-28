@@ -51,8 +51,8 @@ export function StorySection() {
           <div className="relative mx-auto max-w-[30rem] lg:max-w-none">
             <div className="relative aspect-[4/5] w-[88%] overflow-hidden rounded-sm bg-sand md:w-[85%]">
               <img
-                src={asset("/images/lifestyle.jpg")}
-                alt="Woman in cream linen wearing layered gold necklaces and gold earrings"
+                src={asset("/images/products/jhumka-pink-pearl.jpg")}
+                alt="Hand holding a pair of gold jhumka earrings set with pale pink stones and pearl drops"
                 loading="lazy"
                 className="h-full w-full object-cover"
               />
@@ -62,8 +62,8 @@ export function StorySection() {
             <div className="absolute -bottom-8 right-0 w-[52%] max-w-[16rem] border-[7px] border-cream bg-cream shadow-[0_18px_40px_-24px_rgba(38,32,25,0.5)] md:-right-2 md:border-[10px]">
               <div className="aspect-[4/3] overflow-hidden">
                 <img
-                  src={asset("/images/still-life.jpg")}
-                  alt="Flat lay of gold necklaces, hoops and rings on warm marble"
+                  src={asset("/images/products/bracelet-blue-clover.jpg")}
+                  alt="Fine gold chain bracelet with blue enamel clover motifs held in a hand"
                   loading="lazy"
                   className="h-full w-full object-cover"
                 />

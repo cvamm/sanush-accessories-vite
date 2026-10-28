@@ -45,7 +45,7 @@ export function InstagramSection() {
           {gallery.map((item, index) => (
             <Reveal key={item.caption} delay={Math.min(index * 0.05, 0.3)} y={18}>
               <a
-                href={INSTAGRAM_URL}
+                href={item.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative block overflow-hidden rounded-sm"

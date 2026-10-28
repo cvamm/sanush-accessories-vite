@@ -1,205 +1,307 @@
 export const INSTAGRAM_URL = "https://www.instagram.com/sanush_accessories";
 export const INSTAGRAM_HANDLE = "@sanush_accessories";
 
-export type Category = "Necklaces" | "Earrings" | "Bracelets" | "Rings";
+export const post = (code: string) =>
+  `https://www.instagram.com/sanush_accessories/reel/${code}/`;
+
+export type Category = "Earrings" | "Bracelets" | "Bangles" | "Rings";
 
 export type Product = {
   id: string;
   name: string;
-  price: number;
+  /** Catalog price in INR. */
+  price?: number;
   category: Category;
   image: string;
   alt: string;
   tag?: string;
   tagTone?: "dark" | "light";
-  rating: number;
-  reviews: number;
   description: string;
   details: string[];
+  instagramUrl: string;
 };
+
+export type PricedProduct = Product & { price: number };
+
+export const isPriced = (product: Product): product is PricedProduct =>
+  product.price !== undefined;
 
 export const categories: ("All" | Category)[] = [
   "All",
-  "Necklaces",
   "Earrings",
   "Bracelets",
+  "Bangles",
   "Rings",
 ];
 
+// Temporary demo prices; replace them with the brand's current rates.
 export const products: Product[] = [
   {
-    id: "solaire-coin-necklace",
-    name: "Solaire Coin Necklace",
-    price: 1299,
-    category: "Necklaces",
-    image: "/images/necklace.jpg",
-    alt: "Delicate 18k gold plated chain necklace with a small coin pendant on ivory silk",
-    tag: "Bestseller",
-    tagTone: "dark",
-    rating: 4.9,
-    reviews: 218,
-    description:
-      "Our most-loved little layer. A sunstruck coin on the finest gold chain — the one you put on and forget you're wearing.",
-    details: [
-      "18k gold plated over stainless steel",
-      "Anti-tarnish finish for everyday wear",
-      "45cm chain with a 5cm extender",
-      "Hypoallergenic & nickel-free",
-      "Arrives in gift-ready packaging",
-    ],
-  },
-  {
-    id: "layered-muse-set",
-    name: "The Layered Muse Set",
-    price: 1699,
-    category: "Necklaces",
-    image: "/images/pendant-neck.jpg",
-    alt: "Three layered fine gold necklaces worn with a mocha silk top",
-    tag: "New in",
-    tagTone: "light",
-    rating: 4.8,
-    reviews: 94,
-    description:
-      "Three fine chains, already styled. A layered look that takes seconds and stays exactly where you left it.",
-    details: [
-      "Set of three pre-layered chains",
-      "18k gold plated, anti-tarnish finish",
-      "Adjustable clasp, 40–48cm",
-      "Designed to be worn in the shower",
-      "Gift-ready keepsake box included",
-    ],
-  },
-  {
-    id: "perle-coin-necklace",
-    name: "Perle & Coin Necklace",
-    price: 1499,
-    category: "Necklaces",
-    image: "/images/coin-pearl.jpg",
-    alt: "Gold chain necklace with a freshwater pearl and vintage coin pendant on warm paper",
-    rating: 4.7,
-    reviews: 61,
-    description:
-      "An irregular freshwater pearl next to a tiny vintage-style coin. Softly one-of-a-kind, just like the person wearing it.",
-    details: [
-      "Freshwater pearl with a natural silhouette",
-      "18k gold plated over stainless steel",
-      "Anti-tarnish, water-friendly finish",
-      "42cm chain with a 5cm extender",
-      "Each pearl is uniquely shaped",
-    ],
-  },
-  {
-    id: "everyday-huggies",
-    name: "The Everyday Huggies",
-    price: 899,
+    id: "pink-stone-pearl-jhumka",
+    name: "Pink Stone & Pearl Jhumka",
+    price: 649,
     category: "Earrings",
-    image: "/images/hoops.jpg",
-    alt: "Pair of chunky gold huggie hoop earrings on a travertine stone",
-    tag: "Bestseller",
-    tagTone: "dark",
-    rating: 4.9,
-    reviews: 312,
+    image: "/images/products/jhumka-pink-pearl.jpg",
+    alt: "Two gold jhumka earrings set with pale pink stones, framed with small clear stones and finished with pearl and pink bead drops",
+    tag: "From Instagram",
+    tagTone: "light",
     description:
-      "A quiet little statement. Weighted just enough to feel special, small enough to never take off. Sleep, shower, repeat.",
+      "A pair of gold jhumkas with soft pink centre stones, a halo of small clear stones and a fringe of pearls and pink beads. Shown in two sizes so you can pick the weight you want.",
     details: [
-      "Chunky huggie silhouette, 14mm",
+      "Pink stone centre with clear stone detailing",
+      "Pearl and bead fringe",
+      "Available in two sizes",
       "18k gold plated, anti-tarnish finish",
-      "Secure click closure",
-      "Lightweight at 1.8g per earring",
-      "Suitable for healed piercings",
+      "Packed in a gift-ready pouch",
     ],
+    instagramUrl: post("De__uUcvC05"),
   },
   {
-    id: "golden-hour-ear-stack",
-    name: "Golden Hour Ear Stack",
-    price: 1199,
+    id: "green-stone-pearl-jhumka",
+    name: "Green Stone & Pearl Jhumka",
+    price: 649,
     category: "Earrings",
-    image: "/images/ear-stack.jpg",
-    alt: "Curated stack of small gold hoops and drop earrings worn on one ear",
-    tag: "New in",
+    image: "/images/products/jhumka-green-pearl.jpg",
+    alt: "Pair of gold jhumka earrings with rectangular green stones, filigree crown tops and drops of pearls and red beads",
+    tag: "From Instagram",
     tagTone: "light",
-    rating: 4.8,
-    reviews: 127,
     description:
-      "The curated ear, done for you. Four mixed gold pieces designed to sit together like they were always meant to.",
+      "Filigree crown tops, a rectangular green stone and a scatter of pearls and red beads underneath. The festive pair that finishes a look on its own.",
     details: [
-      "Set of four mixed studs & huggies",
-      "18k gold plated, hypoallergenic",
-      "Anti-tarnish, everyday finish",
-      "Mix, match or wear as a stack",
-      "Gift-ready card & pouch included",
+      "Rectangular green stone centre",
+      "Filigree crown detail at the top",
+      "Pearl and red bead drops",
+      "18k gold plated, anti-tarnish finish",
+      "Packed in a gift-ready pouch",
     ],
+    instagramUrl: post("DerV9XVPQ7m"),
   },
   {
-    id: "aria-chain-bracelet",
-    name: "Aria Chain Bracelet",
-    price: 1099,
+    id: "blue-enamel-clover-bracelet",
+    name: "Blue Enamel Clover Bracelet",
+    price: 399,
     category: "Bracelets",
-    image: "/images/bracelet.jpg",
-    alt: "Two delicate gold chain bracelets worn on a wrist against cream linen",
-    tag: "Bestseller",
-    tagTone: "dark",
-    rating: 4.9,
-    reviews: 176,
+    image: "/images/products/bracelet-blue-clover.jpg",
+    alt: "Fine gold chain bracelet with two blue enamel clover motifs and gold bead detailing on a wrist",
     description:
-      "Fine, fluid and made for movement. A whisper of gold at the wrist that works from morning coffee to last call.",
+      "Blue enamel clovers on the finest gold chain, with a little gold bead work between them. A colour-pop bracelet that reads dainty rather than loud.",
     details: [
-      "18k gold plated paperclip chain",
-      "Anti-tarnish & splash-resistant",
-      "16cm with a 4cm extender",
-      "Lobster clasp closure",
-      "Layers beautifully with the bangle set",
+      "Blue enamel clover motifs",
+      "Fine gold chain with bead detailing",
+      "Adjustable clasp for a close fit",
+      "18k gold plated, anti-tarnish finish",
+      "Packed in a gift-ready pouch",
     ],
+    instagramUrl: post("Deei2SzPsfT"),
   },
   {
-    id: "sunlit-bangle-set",
-    name: "Sunlit Bangle Set",
-    price: 1399,
+    id: "baby-size-bracelet",
+    name: "Baby Size Bracelet",
+    price: 349,
     category: "Bracelets",
-    image: "/images/bangles.jpg",
-    alt: "Stack of slim gold bangles worn on a wrist resting on cream stone",
-    tag: "New in",
-    tagTone: "light",
-    rating: 4.8,
-    reviews: 83,
+    image: "/images/products/bracelet-baby-gold.jpg",
+    alt: "Slim flat gold bracelet with small set stones worn close on a thin wrist",
     description:
-      "Five slim bangles that catch the light as you type, wave, reach. The easiest way to feel put together.",
+      "Made for slim wrists. A flat, close-fitting chain with tiny set stones — the one you can wear every day without noticing it.",
     details: [
-      "Set of five slim bangles",
-      "18k gold plated, anti-tarnish",
-      "Inner diameter 6cm",
-      "Lightweight, quiet stack",
-      "Gift-ready packaging",
+      "Smaller sizing for thin wrists",
+      "Flat chain with small set stones",
+      "Lightweight and close-fitting",
+      "18k gold plated, anti-tarnish, hypoallergenic",
+      "Packed in a gift-ready pouch",
     ],
+    instagramUrl: post("DS-OrdOj9WA"),
   },
   {
-    id: "lune-ring-stack",
-    name: "The Lune Ring Stack",
-    price: 999,
+    id: "white-enamel-bangle",
+    name: "White Enamel Bangle",
+    price: 449,
+    category: "Bangles",
+    image: "/images/products/bangle-white-enamel.jpg",
+    alt: "Slim gold bangle inlaid with white enamel petal shapes held between two fingers",
+    description:
+      "A slim bangle inlaid with white enamel petals, so it catches the light without any weight. Quiet on its own, lovely in a stack.",
+    details: [
+      "White enamel petal inlay",
+      "Slim, lightweight bangle",
+      "Wears well alone or stacked",
+      "18k gold plated, anti-tarnish finish",
+      "Packed in a gift-ready pouch",
+    ],
+    instagramUrl: post("De0dhs7vK8M"),
+  },
+  {
+    id: "leaf-detail-bangle-pair",
+    name: "Leaf Detail Bangle Pair",
+    price: 499,
+    category: "Bangles",
+    image: "/images/products/bangle-leaf-pair.jpg",
+    alt: "Two slim open bangles with small leaf motifs at the ends, one gold toned and one silver toned, held in hand",
+    description:
+      "Two slim open bangles finished with a little leaf at each end — one warm gold, one cool silver, so you can mix the pair or wear them apart.",
+    details: [
+      "Set of two open bangles",
+      "Leaf motif at each end",
+      "Gold and silver tones to mix",
+      "Baby sizing for thinner wrists",
+      "Anti-tarnish, hypoallergenic finish",
+    ],
+    instagramUrl: post("Dd1cQOjybY1"),
+  },
+  {
+    id: "stone-solitaire-ring",
+    name: "Stone Solitaire Ring",
+    price: 299,
     category: "Rings",
-    image: "/images/rings.jpg",
-    alt: "Stack of three thin gold rings with a small pearl detail on ivory marble",
-    rating: 4.7,
-    reviews: 108,
+    image: "/images/products/ring-stone-gold.jpg",
+    alt: "Gold ring set with an oval clear stone in a stone-studded halo, with a chain-link band detail, held between two fingers",
+    tag: "From Instagram",
+    tagTone: "light",
     description:
-      "Three thin bands, one little pearl. Wear them together or spread them across fingers — either way, they go everywhere.",
+      "An oval clear stone in a studded halo, on a band with a chain-link detail. The little solitaire that reads engagement-ring from across the room.",
     details: [
-      "Set of three stacking rings",
+      "Oval clear stone with stone halo",
+      "Chain-link band detailing",
+      "Lightweight for everyday wear",
       "18k gold plated, anti-tarnish finish",
-      "Available in sizes 5–9",
-      "Hypoallergenic & nickel-free",
-      "Gift-ready pouch included",
+      "Packed in a gift-ready pouch",
     ],
+    instagramUrl: post("Dd6g-pVyHcL"),
+  },
+  {
+    id: "pink-stone-chandbali",
+    name: "Pink Stone Chandbali",
+    price: 549,
+    category: "Earrings",
+    image: "/images/products/chandbali-pink.jpg",
+    alt: "Pair of pink chandbali earrings with open arcs, clear stone accents and clustered pink bead drops held in one hand",
+    tag: "From Instagram",
+    tagTone: "light",
+    description:
+      "A bright pink chandbali pair with open arcs, clustered stone-look drops and a playful fringe of matching beads.",
+    details: [
+      "Pink and clear stone-look detailing",
+      "Open chandbali arcs",
+      "Clustered drops with bead dangles",
+      "Sold as a pair",
+    ],
+    instagramUrl: post("De3M-C-vrmk"),
+  },
+  {
+    id: "blue-stone-chandbali",
+    name: "Blue Stone Chandbali",
+    price: 549,
+    category: "Earrings",
+    image: "/images/products/chandbali-blue.jpg",
+    alt: "Pair of blue chandbali earrings with open arcs, clear stone accents and blue and white bead drops held in two hands",
+    description:
+      "Deep blue accents and clear stone-look details sit along open chandbali arcs, finished with blue and white bead dangles.",
+    details: [
+      "Blue and clear stone-look detailing",
+      "Open chandbali arcs",
+      "Blue and white bead dangles",
+      "Sold as a pair",
+    ],
+    instagramUrl: post("DezPyyFv1q6"),
+  },
+  {
+    id: "yellow-oxidised-drop-earrings",
+    name: "Yellow Oxidised Drop Earrings",
+    price: 499,
+    category: "Earrings",
+    image: "/images/products/earrings-yellow-oxidised.jpg",
+    alt: "Pair of silver-toned drop earrings with yellow centre panels, floral studs and rows of small jhumka dangles",
+    description:
+      "Yellow centre panels framed by dark silver-toned scrollwork, with floral studs and a row of tiny jhumka drops.",
+    details: [
+      "Yellow centre panels",
+      "Floral stud tops",
+      "Oxidised silver-toned frames",
+      "Small jhumka dangles",
+    ],
+    instagramUrl: post("De1zhZVPcUN"),
+  },
+  {
+    id: "blush-green-silver-jhumka",
+    name: "Blush & Green Silver Jhumka",
+    price: 599,
+    category: "Earrings",
+    image: "/images/products/jhumka-blush-silver.jpg",
+    alt: "Pair of ornate silver-toned jhumka earrings with blush pink stones, green accents and multiple bell-shaped drops",
+    tag: "From Instagram",
+    tagTone: "light",
+    description:
+      "Blush pink stones and green accents bring colour to this ornate silver-toned pair, layered with several bell-shaped jhumka drops.",
+    details: [
+      "Blush pink stone centres",
+      "Green stone-look accents",
+      "Ornate silver-toned detailing",
+      "Multiple jhumka drops",
+    ],
+    instagramUrl: post("DUgC8y3jzk3"),
+  },
+  {
+    id: "lavender-silver-jhumka",
+    name: "Lavender Silver Jhumka",
+    price: 599,
+    category: "Earrings",
+    image: "/images/products/jhumka-lavender-silver.jpg",
+    alt: "Pair of silver-toned jhumka earrings with lavender teardrop tops, circular filigree panels and several bell-shaped drops",
+    description:
+      "Lavender teardrop tops meet circular silver-toned filigree panels and a lively cluster of small jhumka drops.",
+    details: [
+      "Lavender teardrop tops",
+      "Circular filigree panels",
+      "Silver-toned finish",
+      "Multiple jhumka drops",
+    ],
+    instagramUrl: post("DdtdJJUPTVt"),
   },
 ];
 
 export const gallery = [
-  { image: "/images/ear-stack.jpg", caption: "The ear stack, softly done", alt: "Gold ear stack close-up" },
-  { image: "/images/bracelet.jpg", caption: "Layers for every day", alt: "Gold bracelets on a wrist" },
-  { image: "/images/bangles.jpg", caption: "A little light at the wrist", alt: "Gold bangle stack" },
-  { image: "/images/lifestyle.jpg", caption: "Worn, not saved", alt: "Woman wearing gold jewelry in a sunlit interior" },
-  { image: "/images/pendant-neck.jpg", caption: "Three chains, one mood", alt: "Layered gold necklaces on a neckline" },
-  { image: "/images/coin-pearl.jpg", caption: "Pearl meets gold", alt: "Pearl and coin gold necklace" },
+  {
+    image: "/images/products/jhumka-pink-pearl.jpg",
+    caption: "Pink stone, pearl drop",
+    alt: "Gold jhumka earrings with pink stones and pearl drops",
+    instagramUrl: post("De__uUcvC05"),
+  },
+  {
+    image: "/images/products/bracelet-blue-clover.jpg",
+    caption: "Blue clovers on fine gold",
+    alt: "Gold chain bracelet with blue enamel clovers",
+    instagramUrl: post("Deei2SzPsfT"),
+  },
+  {
+    image: "/images/products/bangle-white-enamel.jpg",
+    caption: "Enamel petals, worn close",
+    alt: "Slim gold bangle with white enamel inlay",
+    instagramUrl: post("De0dhs7vK8M"),
+  },
+  {
+    image: "/images/products/jhumka-green-pearl.jpg",
+    caption: "Green stone for festive days",
+    alt: "Gold jhumka earrings with green stones and pearl drops",
+    instagramUrl: post("DerV9XVPQ7m"),
+  },
+  {
+    image: "/images/products/bracelet-baby-gold.jpg",
+    caption: "Sized for thin wrists",
+    alt: "Slim gold bracelet with small set stones on a wrist",
+    instagramUrl: post("DS-OrdOj9WA"),
+  },
+  {
+    image: "/images/products/ring-stone-gold.jpg",
+    caption: "The little solitaire",
+    alt: "Gold ring with an oval clear stone and chain-link band",
+    instagramUrl: post("Dd6g-pVyHcL"),
+  },
+  {
+    image: "/images/products/bangle-leaf-pair.jpg",
+    caption: "Leaf at each end",
+    alt: "Two slim open bangles with leaf motifs, gold and silver toned",
+    instagramUrl: post("Dd1cQOjybY1"),
+  },
 ];
 
 export const promises = [
@@ -229,12 +331,12 @@ export const faqs = [
   {
     question: "What does anti-tarnish actually mean?",
     answer:
-      "Every Sanush piece is 18k gold plated over stainless steel and sealed with a protective anti-tarnish finish. That means your gold stays golden for longer, even with daily wear. It isn't a forever-guarantee against every chemical, but with a little care it will keep its glow beautifully — think months and years, not weeks.",
+      "Every Sanush piece is 18k gold plated over a durable base and sealed with a protective anti-tarnish finish. That means your gold stays golden for longer, even with daily wear. It isn't a forever-guarantee against every chemical, but with a little care it will keep its glow beautifully — think months and years, not weeks.",
   },
   {
     question: "Is it solid gold?",
     answer:
-      "No — and we're always clear about that. Our pieces are 18k gold plated, which gives you the warm gold look and feel at an everyday price. The base is durable stainless steel, chosen because it's strong, water-friendly and kind to sensitive skin.",
+      "No — and we're always clear about that. Our pieces are 18k gold plated, which gives you the warm gold look and feel at an everyday price. The base is chosen because it's strong, water-friendly and kind to sensitive skin.",
   },
   {
     question: "Can I wear it in the shower or gym?",
@@ -244,50 +346,33 @@ export const faqs = [
   {
     question: "How do I place an order?",
     answer:
-      "Add your favourites to the bag and head to checkout, or send us a DM on Instagram with a screenshot of the piece you love. We'll confirm availability, delivery and payment personally in your messages — a real human, every time.",
+      "Add your favourites to the bag, fill in your shipping details and pay securely through Razorpay — cards, UPI, netbanking or wallets. Your order is confirmed the moment payment goes through, and we pack it by hand. If a piece shows as price on request, message us and we'll send today's price first.",
   },
   {
     question: "What about shipping and delivery?",
     answer:
-      "We ship across India, usually within 2–4 business days of your order being confirmed. Every piece is packed in a gift-ready pouch or box, so it's ready for you or for someone you love. Tracking details are sent to you as soon as your parcel is on its way.",
+      "We ship across India, usually within 2–4 business days of your order being confirmed. Shipping is complimentary on orders above ₹999. Every piece is packed in a gift-ready pouch or box, and tracking details reach you as soon as your parcel is on its way.",
   },
   {
     question: "What if something isn't right?",
     answer:
-      "DM us within 48 hours of delivery with a photo and we'll sort it out together. For hygiene reasons, earrings and worn pieces can't be returned, but damaged or incorrect items are always made right. Our inbox is genuinely open — brands are built on the little things.",
-  },
-];
-
-export const testimonials = [
-  {
-    quote:
-      "I wore my Solaire chain in the shower, to the gym and to bed for three months. It still looks exactly like the day it arrived.",
-    name: "Ananya R.",
-    piece: "Solaire Coin Necklace",
-    initials: "AR",
-  },
-  {
-    quote:
-      "The huggies are the perfect size — I have genuinely not taken them off. Ordering through Instagram was so easy too.",
-    name: "Meher S.",
-    piece: "The Everyday Huggies",
-    initials: "MS",
-  },
-  {
-    quote:
-      "Bought the bangle set as a gift and ended up keeping it. Packaging felt like a proper little luxury, and nothing has faded.",
-    name: "Riya K.",
-    piece: "Sunlit Bangle Set",
-    initials: "RK",
-  },
-  {
-    quote:
-      "Sensitive ears, happy ears. Three months of everyday wear and not a single itch or green mark. Already ordering the neck set.",
-    name: "Tanvi P.",
-    piece: "Golden Hour Ear Stack",
-    initials: "TP",
+      "Please check your piece at delivery and message us within 48 hours with a photo if anything is off. As stated on our Instagram, orders are prepaid only, there's no cash on delivery, and we don't accept returns or exchanges — so if you have any doubt about size or colour, ask us before you pay and we'll sort it with you.",
   },
 ];
 
 export const formatINR = (value: number) =>
   `₹${value.toLocaleString("en-IN")}`;
+
+export const priceLabel = (product: Product) =>
+  product.price === undefined ? "Price on request" : formatINR(product.price);
+
+export const BRAND_NAME = "Sanush Accessories";
+
+export const FREE_SHIPPING_AT = 999;
+export const SHIPPING_FEE = 75;
+
+export const PAYMENT_NOTE =
+  "Prepaid orders only · no cash on delivery · free shipping on orders above ₹999.";
+
+export const RAZORPAY_KEY_ID =
+  import.meta.env.VITE_RAZORPAY_KEY_ID ?? "rzp_test_REPLACE_WITH_YOUR_KEY_ID";

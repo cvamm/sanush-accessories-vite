@@ -17,14 +17,13 @@ import { InstagramIcon } from "@/components/BrandIcons";
 import { asset } from "@/utils/asset";
 
 const IMAGES = [
-  { src: "/images/necklace.jpg", alt: "Solaire coin necklace on ivory silk", label: "Solaire" },
-  { src: "/images/pendant-neck.jpg", alt: "Layered gold necklaces", label: "Layered Muse" },
-  { src: "/images/coin-pearl.jpg", alt: "Pearl and coin necklace", label: "Perle" },
-  { src: "/images/ear-stack.jpg", alt: "Curated gold ear stack", label: "Golden Hour" },
-  { src: "/images/hoops.jpg", alt: "Chunky gold huggie hoops", label: "Huggies" },
-  { src: "/images/bangles.jpg", alt: "Stack of gold bangles", label: "Sunlit" },
-  { src: "/images/bracelet.jpg", alt: "Fine gold chain bracelets", label: "Aria" },
-  { src: "/images/rings.jpg", alt: "Three gold stacking rings", label: "Lune" },
+  { src: "/images/products/jhumka-pink-pearl.jpg", alt: "Gold jhumka earrings with pink stones and pearl drops", label: "Pink jhumka" },
+  { src: "/images/products/jhumka-green-pearl.jpg", alt: "Gold jhumka earrings with green stones and pearl drops", label: "Green jhumka" },
+  { src: "/images/products/bracelet-blue-clover.jpg", alt: "Gold chain bracelet with blue enamel clovers", label: "Clover" },
+  { src: "/images/products/bangle-white-enamel.jpg", alt: "Slim gold bangle with white enamel inlay", label: "Enamel" },
+  { src: "/images/products/bracelet-baby-gold.jpg", alt: "Slim gold bracelet worn on a thin wrist", label: "Baby size" },
+  { src: "/images/products/ring-stone-gold.jpg", alt: "Gold ring with an oval clear stone", label: "Solitaire" },
+  { src: "/images/products/bangle-leaf-pair.jpg", alt: "Two slim bangles with leaf details", label: "Leaf pair" },
 ];
 
 type Vec = { x: number; y: number; rotateZ: number; rotateY: number; scale: number };
@@ -307,7 +306,7 @@ export default function PanoramicSpreadHero() {
               <span className="h-px w-5 bg-gold/40" />
             </span>
             <h2 className="mt-1.5 font-serif text-[1.45rem] leading-[1.05] text-ink">
-              Eight little pieces.{" "}
+              {IMAGES.length} little pieces.{" "}
               <span className="serif-italic text-gold">One gold wardrobe.</span>
             </h2>
             <a
@@ -330,7 +329,7 @@ export default function PanoramicSpreadHero() {
             <span className="h-px w-6 bg-gold/40" />
           </span>
           <h2 className="mt-2.5 font-serif text-[clamp(1.6rem,3.3vw,2.7rem)] leading-[1.04] text-ink md:mt-3">
-            Eight little pieces.
+            {IMAGES.length} little pieces.
             <br />
             <span className="serif-italic text-gold">One gold wardrobe.</span>
           </h2>
@@ -374,7 +373,7 @@ export default function PanoramicSpreadHero() {
               </span>
             </div>
             <span className="label hidden text-[8px] text-ink/40 sm:block md:text-[9px]">
-              Eight pieces · one golden wardrobe
+              {IMAGES.length} pieces · one golden wardrobe
             </span>
           </div>
         </motion.div>
@@ -392,7 +391,7 @@ export default function PanoramicSpreadHero() {
               href="#shop"
               className="btn btn-dark px-5 py-3 text-[8.5px] md:text-[9px]"
             >
-              Explore all eight pieces
+              Explore all {IMAGES.length} pieces
               <ArrowRight className="h-3 w-3" strokeWidth={1.6} />
             </a>
             <a
@@ -402,7 +401,7 @@ export default function PanoramicSpreadHero() {
               className="group flex items-center gap-1.5 text-[8px] uppercase tracking-[0.18em] text-ink/55 transition-colors hover:text-gold md:text-[9px]"
             >
               <InstagramIcon className="h-3 w-3" />
-              DM to order
+              Ask us anything
             </a>
           </div>
           <p className="label hidden text-[8px] text-ink/45 sm:block md:text-[9px]">

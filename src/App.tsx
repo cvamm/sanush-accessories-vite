@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { InstagramIcon } from "@/components/BrandIcons";
 import CartDrawer, { type CartLine } from "@/components/CartDrawer";
+import CheckoutModal from "@/components/CheckoutModal";
 import { FaqSection, Footer } from "@/components/FaqFooter";
 import { InstagramSection, Newsletter } from "@/components/InstagramSection";
 import CategoryRail from "@/components/CategoryRail";
@@ -13,20 +14,50 @@ import {
 } from "@/components/BrandStory";
 import ShopSection from "@/components/ShopSection";
 import SiteHeader from "@/components/SiteHeader";
-import Testimonials from "@/components/Testimonials";
 import PanoramicSpreadHero from "@/components/ui/panoramic-spread-hero";
-import { INSTAGRAM_URL, type Product } from "@/data/site";
+import {
+  INSTAGRAM_URL,
+  isPriced,
+  products,
+  type PricedProduct,
+  type Product,
+} from "@/data/site";
 
 type ToastState = { id: number; message: string };
 
+const CART_KEY = "sanush:cart";
+
+type StoredLine = { id: string; qty: number };
+
+function loadCart(): CartLine[] {
+  try {
+    const raw = window.localStorage.getItem(CART_KEY);
+    if (!raw) return [];
+    const stored = JSON.parse(raw) as StoredLine[];
+    return stored.reduce<CartLine[]>((lines, line) => {
+      const product = products.find((item) => item.id === line.id);
+      if (!product || !isPriced(product)) return lines;
+      return [...lines, { product, qty: Math.min(9, Math.max(1, line.qty)) }];
+    }, []);
+  } catch {
+    return [];
+  }
+}
+
 export default function App() {
-  const [cart, setCart] = useState<CartLine[]>([]);
+  const [cart, setCart] = useState<CartLine[]>(loadCart);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [toast, setToast] = useState<ToastState | null>(null);
 
   const cartCount = cart.reduce((sum, line) => sum + line.qty, 0);
+
+  useEffect(() => {
+    const stored = cart.map<StoredLine>(({ product, qty }) => ({ id: product.id, qty }));
+    window.localStorage.setItem(CART_KEY, JSON.stringify(stored));
+  }, [cart]);
 
   const notify = useCallback((message: string) => {
     setToast({ id: Date.now(), message });
@@ -38,7 +69,7 @@ export default function App() {
     return () => window.clearTimeout(timer);
   }, [toast]);
 
-  const addToCart = useCallback((product: Product, qty = 1) => {
+  const addToCart = useCallback((product: PricedProduct, qty = 1) => {
     setCart((current) => {
       const existing = current.find((line) => line.product.id === product.id);
       if (existing) {
@@ -122,7 +153,6 @@ export default function App() {
         />
         <StorySection />
         <PromiseSection />
-        <Testimonials />
         <InstagramSection />
         <Newsletter />
         <FaqSection />
@@ -136,6 +166,21 @@ export default function App() {
         onClose={() => setCartOpen(false)}
         onUpdateQty={updateQty}
         onRemove={removeLine}
+        onCheckout={() => {
+          setCartOpen(false);
+          setCheckoutOpen(true);
+        }}
+      />
+
+      <CheckoutModal
+        open={checkoutOpen}
+        items={cart}
+        onClose={() => setCheckoutOpen(false)}
+        onPaid={() => {
+          setCart([]);
+          setCheckoutOpen(false);
+          notify("Payment received — your order is confirmed. ✦");
+        }}
       />
 
       {/* floating DM / instagram button */}
@@ -150,7 +195,7 @@ export default function App() {
           <InstagramIcon className="h-4 w-4" />
         </span>
         <span className="hidden max-w-0 overflow-hidden whitespace-nowrap text-[9px] font-medium uppercase tracking-[0.16em] opacity-0 transition-all duration-300 md:block md:group-hover:max-w-[9rem] md:group-hover:opacity-100">
-          DM to order
+          Message us
         </span>
       </a>
 

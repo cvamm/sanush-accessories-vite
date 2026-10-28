@@ -4,9 +4,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { InstagramIcon } from "@/components/BrandIcons";
 import { asset } from "@/utils/asset";
 import {
-  formatINR,
   INSTAGRAM_HANDLE,
   INSTAGRAM_URL,
+  priceLabel,
   products,
 } from "@/data/site";
 
@@ -19,9 +19,9 @@ const NAV_LINKS = [
 ];
 
 const ANNOUNCEMENTS = [
-  "Complimentary shipping on orders over ₹1,499",
+  "Complimentary shipping on orders over ₹999",
   "18k gold plated · anti-tarnish · made for every day",
-  "New here? Slide into our DMs for styling help",
+  "Pay securely with Razorpay · UPI, cards & netbanking",
   "Gift-ready packaging with every piece",
 ];
 
@@ -115,7 +115,7 @@ export default function SiteHeader({
           </div>
         </div>
         <p className="label flex h-8 items-center justify-center px-4 text-center text-[8px] tracking-[0.22em] text-ivory/80 md:hidden">
-          Free shipping over ₹1,499 · anti-tarnish gold
+          Free shipping over ₹999 · pay with Razorpay
         </p>
       </div>
 
@@ -235,17 +235,22 @@ export default function SiteHeader({
 
             <div className="border-t border-line px-6 py-5">
               <a
+                href="#shop"
+                onClick={() => setMenuOpen(false)}
+                className="btn btn-dark mb-4 w-full"
+              >
+                Shop the collection
+                <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.6} />
+              </a>
+              <a
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-dark mb-4 w-full"
+                className="label flex items-center justify-center gap-2 text-[7.5px] text-muted transition-colors hover:text-gold"
               >
-                <InstagramIcon className="h-4 w-4" />
-                DM us to order
-              </a>
-              <p className="label text-center text-[7.5px] text-muted">
+                <InstagramIcon className="h-3 w-3" />
                 {INSTAGRAM_HANDLE} · 18k gold plated · anti-tarnish
-              </p>
+              </a>
             </div>
           </motion.div>
         )}
@@ -285,7 +290,7 @@ export default function SiteHeader({
                   ref={inputRef}
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Search necklaces, huggies, rings…"
+                  placeholder="Search jhumkas, bangles, bracelets…"
                   aria-label="Search products"
                   className="w-full bg-transparent text-sm font-light text-ink placeholder:text-muted/70 focus:outline-none"
                 />
@@ -323,7 +328,7 @@ export default function SiteHeader({
                               {product.name}
                             </span>
                             <span className="mt-0.5 block text-[10px] font-light uppercase tracking-[0.16em] text-muted">
-                              {product.category} · {formatINR(product.price)}
+                              {product.category} · {priceLabel(product)}
                             </span>
                           </span>
                           <ArrowRight className="h-4 w-4 text-ink/25 transition-transform group-hover:translate-x-1 group-hover:text-gold" strokeWidth={1.4} />
@@ -335,7 +340,7 @@ export default function SiteHeader({
                   <div className="py-6 text-center">
                     <p className="font-serif text-xl text-ink">No little luxuries found.</p>
                     <p className="mt-1 text-xs font-light text-muted">
-                      Try “necklace”, “hoops” or ask us in the DMs.
+                      Try “jhumka”, “bangle” or ask us in the DMs.
                     </p>
                     <a
                       href={INSTAGRAM_URL}
@@ -350,7 +355,7 @@ export default function SiteHeader({
 
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-line/70 pt-3">
                   <div className="flex flex-wrap gap-2">
-                    {["Huggies", "Coin necklace", "Bangle", "Rings"].map((chip) => (
+                    {["Jhumka", "Bangle", "Bracelet", "Ring"].map((chip) => (
                       <button
                         key={chip}
                         type="button"

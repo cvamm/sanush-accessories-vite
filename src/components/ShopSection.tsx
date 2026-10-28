@@ -5,7 +5,7 @@ import {
   Heart,
   Minus,
   Plus,
-  Star,
+  ShoppingBag,
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -14,10 +14,12 @@ import Reveal from "@/components/Reveal";
 import { asset } from "@/utils/asset";
 import {
   categories,
-  formatINR,
   INSTAGRAM_URL,
+  isPriced,
+  priceLabel,
   products,
   type Category,
+  type PricedProduct,
   type Product,
 } from "@/data/site";
 
@@ -26,36 +28,8 @@ type ShopSectionProps = {
   onClearSearch: () => void;
   wishlist: string[];
   onToggleWishlist: (product: Product) => void;
-  onAddToCart: (product: Product, qty?: number) => void;
+  onAddToCart: (product: PricedProduct, qty?: number) => void;
 };
-
-function Stars({
-  rating,
-  reviews,
-  compact = false,
-}: {
-  rating: number;
-  reviews?: number;
-  compact?: boolean;
-}) {
-  return (
-    <span className="flex items-center gap-1.5">
-      <span className="flex items-center gap-0.5 text-gold" aria-hidden="true">
-        {[0, 1, 2, 3, 4].map((star) => (
-          <Star
-            key={star}
-            className={`h-2.5 w-2.5 ${star < Math.round(rating) ? "fill-gold" : "fill-transparent"}`}
-            strokeWidth={1.2}
-          />
-        ))}
-      </span>
-      <span className="whitespace-nowrap text-[9px] font-light tracking-[0.04em] text-muted">
-        {rating.toFixed(1)}
-        {reviews !== undefined && !compact ? ` (${reviews})` : ""}
-      </span>
-    </span>
-  );
-}
 
 function ProductCard({
   product,
@@ -67,7 +41,7 @@ function ProductCard({
   product: Product;
   saved: boolean;
   onQuickView: () => void;
-  onAddToCart: () => void;
+  onAddToCart: (product: PricedProduct) => void;
   onToggleWishlist: () => void;
 }) {
   return (
@@ -114,16 +88,18 @@ function ProductCard({
           />
         </button>
 
-        <div className="absolute inset-x-2 bottom-2 translate-y-0 opacity-100 transition-all duration-300 md:translate-y-3 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
-          <button
-            type="button"
-            onClick={onAddToCart}
-            className="flex w-full items-center justify-center gap-1.5 rounded-full bg-ivory/95 py-2.5 text-[9px] font-medium uppercase tracking-[0.18em] text-ink shadow-sm backdrop-blur-sm transition-colors hover:bg-ink hover:text-ivory"
-          >
-            <Plus className="h-3 w-3" strokeWidth={1.8} />
-            Quick add
-          </button>
-        </div>
+        {isPriced(product) && (
+          <div className="absolute inset-x-2 bottom-2 translate-y-0 opacity-100 transition-all duration-300 md:translate-y-3 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+            <button
+              type="button"
+              onClick={() => onAddToCart(product)}
+              className="flex w-full items-center justify-center gap-1.5 rounded-full bg-ivory/95 py-2.5 text-[9px] font-medium uppercase tracking-[0.18em] text-ink shadow-sm backdrop-blur-sm transition-colors hover:bg-ink hover:text-ivory"
+            >
+              <Plus className="h-3 w-3" strokeWidth={1.8} />
+              Quick add
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="mt-3">
@@ -138,15 +114,28 @@ function ProductCard({
           >
             {product.name}
           </button>
-          <span className="mt-0.5 shrink-0 whitespace-nowrap text-[11px] font-medium tabular-nums text-ink/80 md:text-xs">
-            {formatINR(product.price)}
+          <span
+            className={`mt-0.5 shrink-0 whitespace-nowrap text-[11px] tabular-nums md:text-xs ${
+              product.price === undefined
+                ? "text-[9px] font-light uppercase tracking-[0.12em] text-muted"
+                : "font-medium text-ink/80"
+            }`}
+          >
+            {priceLabel(product)}
           </span>
         </div>
         <div className="mt-2 flex items-center justify-between gap-2 border-t border-line/60 pt-1.5">
           <span className="text-[8.5px] font-light uppercase tracking-[0.14em] text-muted/80">
             Anti-tarnish
           </span>
-          <Stars rating={product.rating} reviews={product.reviews} compact />
+          <a
+            href={product.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 text-[8.5px] font-light uppercase tracking-[0.14em] text-ink/45 transition-colors hover:text-gold"
+          >
+            <InstagramIcon className="h-2.5 w-2.5" /> View post
+          </a>
         </div>
       </div>
     </article>
@@ -163,7 +152,7 @@ function QuickView({
   product: Product;
   saved: boolean;
   onClose: () => void;
-  onAddToCart: (qty: number) => void;
+  onAddToCart: (product: PricedProduct, qty: number) => void;
   onToggleWishlist: () => void;
 }) {
   const [qty, setQty] = useState(1);
@@ -244,13 +233,21 @@ function QuickView({
             {product.name}
           </h2>
           <div className="mt-2 flex items-center gap-3">
-            <Stars rating={product.rating} reviews={product.reviews} />
+            <span className="text-[10px] font-light uppercase tracking-[0.12em] text-ink/70">
+              {product.category}
+            </span>
             <span className="h-3 w-px bg-line" />
             <span className="text-[10px] font-light uppercase tracking-[0.12em] text-ink/70">
               Anti-tarnish
             </span>
           </div>
-          <p className="mt-4 font-serif text-2xl text-ink">{formatINR(product.price)}</p>
+          <p
+            className={`mt-4 font-serif text-ink ${
+              product.price === undefined ? "text-lg text-muted" : "text-2xl"
+            }`}
+          >
+            {priceLabel(product)}
+          </p>
           <p className="mt-3 text-[12.5px] font-light leading-relaxed text-muted">
             {product.description}
           </p>
@@ -264,48 +261,70 @@ function QuickView({
             ))}
           </ul>
 
-          <div className="mt-5 flex items-center gap-3">
-            <div className="flex items-center rounded-full border border-line">
+          {!isPriced(product) ? (
+            <a
+              href={product.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-dark mt-5 w-full"
+            >
+              <InstagramIcon className="h-4 w-4" />
+              Ask for today&apos;s price
+            </a>
+          ) : (
+            <div className="mt-5 flex items-center gap-3">
+              <div className="flex items-center rounded-full border border-line">
+                <button
+                  type="button"
+                  onClick={() => setQty((value) => Math.max(1, value - 1))}
+                  aria-label="Decrease quantity"
+                  className="flex h-9 w-9 items-center justify-center text-ink/60 hover:text-ink"
+                >
+                  <Minus className="h-3 w-3" strokeWidth={1.6} />
+                </button>
+                <span className="w-7 text-center text-xs tabular-nums">{qty}</span>
+                <button
+                  type="button"
+                  onClick={() => setQty((value) => Math.min(9, value + 1))}
+                  aria-label="Increase quantity"
+                  className="flex h-9 w-9 items-center justify-center text-ink/60 hover:text-ink"
+                >
+                  <Plus className="h-3 w-3" strokeWidth={1.6} />
+                </button>
+              </div>
               <button
                 type="button"
-                onClick={() => setQty((value) => Math.max(1, value - 1))}
-                aria-label="Decrease quantity"
-                className="flex h-9 w-9 items-center justify-center text-ink/60 hover:text-ink"
+                onClick={() => onAddToCart(product, qty)}
+                className="btn btn-dark flex-1 px-4"
               >
-                <Minus className="h-3 w-3" strokeWidth={1.6} />
-              </button>
-              <span className="w-7 text-center text-xs tabular-nums">{qty}</span>
-              <button
-                type="button"
-                onClick={() => setQty((value) => Math.min(9, value + 1))}
-                aria-label="Increase quantity"
-                className="flex h-9 w-9 items-center justify-center text-ink/60 hover:text-ink"
-              >
-                <Plus className="h-3 w-3" strokeWidth={1.6} />
+                Add to bag
+                <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.6} />
               </button>
             </div>
-            <button
-              type="button"
-              onClick={() => onAddToCart(qty)}
-              className="btn btn-dark flex-1 px-4"
-            >
-              Add to bag
-              <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.6} />
-            </button>
-          </div>
+          )}
 
           <p className="mt-3 flex items-center justify-center gap-1.5 text-[9px] font-light tracking-[0.05em] text-muted">
             <span className="text-gold">✦</span> Gift-ready packaging · ships across India
           </p>
 
           <a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 flex items-center justify-center gap-1.5 text-[9px] uppercase tracking-[0.16em] text-ink/50 transition-colors hover:text-gold"
+            href="#shop"
+            onClick={onClose}
+            className="mt-3 flex items-center justify-center gap-1.5 text-[9px] uppercase tracking-[0.16em] text-ink/50 transition-colors hover:text-gold"
           >
-            <InstagramIcon className="h-3 w-3" /> Questions? DM us
+            <ShoppingBag className="h-3 w-3" /> Keep shopping — pay here on the site
           </a>
+
+          {product.instagramUrl && (
+            <a
+              href={product.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center justify-center gap-1.5 text-[9px] uppercase tracking-[0.16em] text-ink/40 transition-colors hover:text-gold"
+            >
+              <InstagramIcon className="h-3 w-3" /> See this piece on Instagram
+            </a>
+          )}
         </div>
       </motion.div>
     </motion.div>
@@ -355,7 +374,7 @@ export default function ShopSection({
             </div>
             <div className="flex max-w-sm flex-col gap-4 md:items-end md:text-right">
               <p className="text-[12.5px] font-light leading-relaxed text-muted">
-                Everyday necklaces, earrings and little stacks — designed to layer,
+                Jhumkas, bangles, bracelets and little rings — designed to layer,
                 live and travel with you. Every piece plated in 18k gold with an
                 anti-tarnish finish.
               </p>
@@ -440,7 +459,7 @@ export default function ShopSection({
                   product={product}
                   saved={wishlist.includes(product.id)}
                   onQuickView={() => setQuickView(product)}
-                  onAddToCart={() => onAddToCart(product)}
+                  onAddToCart={onAddToCart}
                   onToggleWishlist={() => onToggleWishlist(product)}
                 />
               </Reveal>
@@ -483,7 +502,7 @@ export default function ShopSection({
         <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-line pt-6 sm:flex-row sm:items-center">
           <p className="flex items-center gap-2 text-[10px] font-light tracking-[0.04em] text-muted">
             <span className="text-gold">✦</span>
-            Every piece ships in gift-ready packaging. Complimentary shipping over ₹1,499.
+            Every piece ships in gift-ready packaging. Complimentary shipping over ₹999.
           </p>
           <a
             href={INSTAGRAM_URL}
@@ -504,8 +523,8 @@ export default function ShopSection({
             product={quickView}
             saved={wishlist.includes(quickView.id)}
             onClose={() => setQuickView(null)}
-            onAddToCart={(qty) => {
-              onAddToCart(quickView, qty);
+            onAddToCart={(product, qty) => {
+              onAddToCart(product, qty);
               setQuickView(null);
             }}
             onToggleWishlist={() => onToggleWishlist(quickView)}
