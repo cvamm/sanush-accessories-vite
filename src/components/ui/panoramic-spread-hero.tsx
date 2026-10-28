@@ -277,21 +277,29 @@ export default function PanoramicSpreadHero() {
             18k gold plated jewelry with an anti-tarnish finish. Light enough to
             live in, made to be worn every single day.
           </p>
-          <div className="mt-5 flex flex-col items-center gap-3 sm:flex-row md:mt-6">
+          <div className="mt-5 flex w-full max-w-sm flex-col items-stretch gap-3 sm:flex-row sm:justify-center md:hidden">
             <a href="#shop" className="btn btn-dark w-full sm:w-auto">
               Shop the edit
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.6} aria-hidden="true" />
             </a>
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline w-full sm:w-auto"
-            >
-              <InstagramIcon className="h-3.5 w-3.5" strokeWidth={1.6} />
-              Follow the journey
+            <a href="#journal" className="btn btn-dark w-full sm:w-auto">
+              Follow the journal
             </a>
           </div>
+        </motion.div>
+
+        <motion.div
+          className={`pointer-events-none absolute inset-x-0 top-[55%] z-30 hidden items-center justify-between px-10 md:flex lg:px-16 ${
+            textHidden ? "pointer-events-none" : ""
+          }`}
+          style={{ y: textY, opacity: textOpacity }}
+        >
+          <a href="#shop" className="btn btn-dark pointer-events-auto">
+            Shop the edit
+          </a>
+          <a href="#journal" className="btn btn-dark pointer-events-auto">
+            Follow the journal
+          </a>
         </motion.div>
 
         {/* spread caption — fades in once the collection unfurls */}
