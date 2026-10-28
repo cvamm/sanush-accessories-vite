@@ -57,7 +57,7 @@ const generateCards = (): CardModel[] => {
       desktop: {
         stacked: {
           x: offset * 1.8,
-          y: offset * -0.8 + 23,
+          y: offset * -0.8 + 16,
           rotateZ: offset * 3.4,
           rotateY: offset * 1.5,
           scale: 1 - absOffset * 0.008,
@@ -69,12 +69,12 @@ const generateCards = (): CardModel[] => {
           rotateY: offset * -8,
           scale: 1 - absOffset * 0.028,
         },
-        size: { w: "19.5vw", h: "28vh", ml: "-9.75vw", mt: "-14vh" },
+        size: { w: "18vw", h: "38vh", ml: "-9vw", mt: "-19vh" },
       },
       mobile: {
         stacked: {
           x: offset * 1.6,
-          y: offset * -0.8 + 25,
+          y: offset * -0.8 + 27,
           rotateZ: offset * 3.8,
           rotateY: 0,
           scale: 1 - absOffset * 0.008,
@@ -86,7 +86,7 @@ const generateCards = (): CardModel[] => {
           rotateY: offset * -12,
           scale: 1 - absOffset * 0.035,
         },
-        size: { w: "42vw", h: "26vh", ml: "-21vw", mt: "-13vh" },
+        size: { w: "42vw", h: "22vh", ml: "-21vw", mt: "-11vh" },
       },
     };
   });
@@ -225,6 +225,7 @@ export default function PanoramicSpreadHero() {
 
   const { tiltX, tiltY } = usePointerTilt(spread, !reduce);
 
+  const deckX = useTransform(progress, [0, 0.62], ["0vw", isMobile ? "0vw" : "-21vw"]);
   const textY = useTransform(progress, [0, 0.62], ["0vh", "-7vh"]);
   const textScale = useTransform(progress, [0, 0.62], [1, 0.95]);
   const textOpacity = useTransform(progress, [0.18, 0.48], [1, 0]);
@@ -259,7 +260,7 @@ export default function PanoramicSpreadHero() {
 
         {/* headline */}
         <motion.div
-          className={`absolute inset-x-0 top-[10%] z-30 flex flex-col items-center px-5 text-center md:top-[9%] ${
+          className={`absolute inset-x-0 top-[7%] z-30 flex flex-col items-center px-5 text-center md:bottom-0 md:left-0 md:right-auto md:top-0 md:w-[47%] md:items-start md:justify-center md:px-9 md:text-left lg:px-16 xl:px-20 ${
             textHidden ? "pointer-events-none" : ""
           }`}
           style={{ y: textY, scale: textScale, opacity: textOpacity }}
@@ -268,17 +269,17 @@ export default function PanoramicSpreadHero() {
             <Sparkles className="h-3 w-3" strokeWidth={1.4} aria-hidden="true" />
             Sanush Accessories
           </span>
-          <h1 className="max-w-[16ch] font-serif text-[clamp(2.7rem,9vw,5.7rem)] leading-[0.92] tracking-[-0.015em] text-ink">
+          <h1 className="max-w-[16ch] font-serif text-[clamp(2.55rem,9vw,5.7rem)] leading-[0.92] tracking-[-0.015em] text-ink md:max-w-[14ch] md:text-[clamp(3.4rem,5vw,5.9rem)]">
             Everyday gold,
             <br />
             <span className="serif-italic text-gold">made to last.</span>
           </h1>
-          <p className="mt-4 max-w-[42ch] text-[12px] font-light leading-relaxed text-muted md:mt-5 md:text-[14px]">
+          <p className="mt-4 max-w-[42ch] text-[12px] font-light leading-relaxed text-muted md:mt-5 md:max-w-[36ch] md:text-[14px]">
             18k gold plated jewelry with an anti-tarnish finish. Light enough to
             live in, made to be worn every single day.
           </p>
-          <div className="mt-5 flex flex-col items-center gap-3 sm:flex-row md:mt-6">
-            <a href="#shop" className="btn btn-dark w-full sm:w-auto">
+          <div className="mt-5 flex w-full max-w-sm flex-col items-stretch gap-3 min-[420px]:flex-row md:mt-6 md:w-auto md:max-w-none md:items-center">
+            <a href="#shop" className="btn btn-dark w-full min-[420px]:w-auto">
               Shop the edit
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.6} aria-hidden="true" />
             </a>
@@ -286,7 +287,7 @@ export default function PanoramicSpreadHero() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-outline w-full sm:w-auto"
+              className="btn btn-outline w-full min-[420px]:w-auto"
             >
               <InstagramIcon className="h-3.5 w-3.5" strokeWidth={1.6} />
               Follow the journey
@@ -344,8 +345,8 @@ export default function PanoramicSpreadHero() {
 
         {/* panoramic deck */}
         <motion.div
-          className="absolute inset-0 z-10"
-          style={{ rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d", perspective: 1200 }}
+          className="absolute inset-0 z-10 md:right-auto md:left-[42%] md:w-[58%]"
+          style={{ x: deckX, rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d", perspective: 1200 }}
         >
           {CARDS.map((card, i) => (
             <GalleryCard

@@ -25,16 +25,16 @@ const CATEGORY_CARDS = [
     note: "Enamel petals, slim stack",
     image: "/images/products/bangle-white-enamel.jpg",
     alt: "Slim gold bangle inlaid with white enamel petals",
-    className: "col-span-1",
-    aspect: "aspect-square",
+    className: "col-span-1 md:col-span-2",
+    aspect: "aspect-square md:aspect-[2/1]",
   },
   {
     name: "Bracelets",
     note: "Clovers & baby sizing",
     image: "/images/products/bracelet-blue-clover.jpg",
     alt: "Fine gold chain bracelet with blue enamel clover motifs",
-    className: "col-span-2",
-    aspect: "aspect-[2/1]",
+    className: "col-span-2 md:col-span-3",
+    aspect: "aspect-[2/1] md:aspect-[3/1]",
   },
 ];
 
